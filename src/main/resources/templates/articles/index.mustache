@@ -9,16 +9,14 @@
     </thead>
     <tbody>
 
-    {{#article}}
+    {{#articleList}}
         <tr>
             <th>{{id}}</th>
-            <td>{{title}}</td>
+            <td><a href="/articles/{{id}}"> {{title}}</a></td>
             <td>{{content}}</td>
         </tr>
-    {{/article}}
+    {{/articleList}}
     </tbody>
 </table>
-<a href="/articles/{{article.id}}/edit" class="btn btn-primary">Edit</a>
-<a href="/articles">Go to Article list</a>
+<a href="articles/new">New Article</a>
 {{>layouts/footer}}
-
