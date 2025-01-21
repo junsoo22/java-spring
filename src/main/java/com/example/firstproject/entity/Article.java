@@ -21,6 +21,13 @@ public class Article {
     @Column
     private String content;
 
+    public void patch(Article article) {
+        if(article.title!=null)  //갱신할 값이 있다면 this(target)의 title을 갱신해줌
+            this.title=article.title;
+        if(article.content!=null)
+            this.content=article.content;
+    }
+
 
 //    //기본 생성자->도 어노테이션으로 줄일 수 있음
 //    public Article(){
