@@ -28,6 +28,7 @@ public class ArticleForm {
 //    }
 
     public Article toEntity() {
+
         return new Article(id, title, content);   //폼 데이터를 담은 DTO 객체를 엔티티로 반환함
     }
 }
