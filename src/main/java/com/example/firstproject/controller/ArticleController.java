@@ -22,11 +22,12 @@ import java.util.Optional;
 @Controller
 public class ArticleController {
     @Autowired   //스프링부트가 미리 생성해 높은 객체를 가져다가 연결해줌. 의존성 주입
-    private ArticleRepository articleRepository;
+    private ArticleRepository articleRepository;        //객체 만들ㅇ지 않아도 됨.
 
 
     @GetMapping("/articles/new")
     public String newArticleForm() {
+
         return "articles/new";
     }
 
@@ -39,21 +40,23 @@ public class ArticleController {
         log.info(article.toString());
         //System.out.println(article.toString());
         //2. 라파지터리로 엔티티를 DB에 저장
-        Article saved=articleRepository.save(article);   //article 엔티티를 저장해 saved 객체에 반환
+        Article saved=articleRepository.save(article);   //article 엔티티를 저장해 saved 객체에 반환.   save()메서드는 저장된 엔티티를 반환하.ㅁ
+
         log.info(saved.toString());
         //System.out.println(saved.toString());
 
-        return "redirect:/articles/"+saved.getId();    //id에 따라 articles/id 페이지를 재요청
+        return "redirect:/articles/"+saved.getId();    //id에 따라 articles/id 페이지를 재요청. saved객체의 id값을 가져옴.
     }
 
-    @GetMapping("/articles/{id}")    //id는 변수로 사용됨
+    @GetMapping("/articles/{id}")    //id는 변수로 사용됨.  URL 요청
     public String show(@PathVariable Long id, Model model){   //매개변수로 id 받아오기   @Pathvariable: URL 요청으로 들어온 전달값을 컨트롤러의 매개변수로 가져오는 어노테이션
         log.info("id= "+id);    //id 잘 받았는지 확인하는 로그 찍기
         //1. id를 조회해 데이터 가져오기
+        //findById: CrudRepository가 제공하는 메서드. 특정 엔티티의 id 값을 기준으로 데이터를 찾아 Optional 타입으로 반환
         Article articleEntity=articleRepository.findById(id).orElse(null);   //orElse: id값으로 데이터를 찾을때 해당 id 값이없으면 null을 반환하라는 뜻
 
         //2. 모델에 데이터 등록하기
-        model.addAttribute("article",articleEntity);
+        model.addAttribute("article",articleEntity);    //article이라는 이름으로 articleEntity 객체 등록
         //3. 뷰 페이지 설정하기
         return "articles/show";   //뷰페이지는 articles라는 디렉터리 안에 show라는 파일이 있다고 가정하고 반환
     }
@@ -63,7 +66,7 @@ public class ArticleController {
         //1. 모든 데이터 가져오기
         ArrayList<Article> articleEntityList = articleRepository.findAll();
         //2. 모델에 데이터 등록하기. 가져온 데이터를 받은 articleEntityList를 뷰 페이지로 전달할때는 모델 사용
-        model.addAttribute("articleList", articleEntityList);
+        model.addAttribute("articleList", articleEntityList);     //articleList라는 이름으로 articleEntityList 객체 추가
         //3. 뷰 페이지 설정하기
         return "articles/index";
     }
