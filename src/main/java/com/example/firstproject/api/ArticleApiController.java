@@ -18,35 +18,21 @@ public class ArticleApiController {
 //    @Autowired
 //    private ArticleRepository articleRepository;
 
-    @Autowired      //생성객체를 가져와 연결
+    @Autowired      //생성객체를 가져와 연결. ArticleService 클래스에서 객체를 만들면 REST 컨트롤러에서 객체 주입하는 방식으로 서비스 객체 선언
     private ArticleService articleService;
-//    //GET
-//    @GetMapping("/api/articles")
-//    public List<Article>index(){
-//
-//        return articleRepository.findAll();
-//    }
+
     //Get
     @GetMapping("/api/articles")
     public List<Article>index(){
-        return articleService.index();
+        return articleService.index();    //서비스를 통해 데이터를 가져오고, 서비스는 리퍼지토리를 통해 데이터 가져옴.
     }
-//    @GetMapping("/api/articles/{id}")
-//    public Article show(@PathVariable Long id){
-//        return articleRepository.findById(id).orElse(null);
-//    }
 
     @GetMapping("/api/articles/{id}")
     public Article show(@PathVariable Long id){
         return articleService.show(id);
     }
-//    //POST
-//    @PostMapping("/api/articles")
-//    public Article create(@RequestBody ArticleForm dto){   //@RequestBody: 본문에 실어 보내는 데이터를 create() 메서드의 매개변수로 받아 올 수 있음.
-//        Article article=dto.toEntity();
-//        return articleRepository.save(article);
-//    }
 
+    //Post
     @PostMapping("api/articles")
     public ResponseEntity<Article> create(@RequestBody ArticleForm dto){
         Article created=articleService.create(dto);

@@ -18,7 +18,7 @@ public class ArticleService {
     private ArticleRepository articleRepository;   //게시글 리파지터리 객체 주입
 
     public List<Article> index() {
-        return articleRepository.findAll();
+        return articleRepository.findAll();     //데이터는 리파지터리를 통해 가져옴.
     }
 
     public Article show(Long id) {
@@ -27,7 +27,7 @@ public class ArticleService {
 
     public Article create(ArticleForm dto) {
         Article article=dto.toEntity();
-        if(article.getId()!=null){  //id는 데이터 생성할 때 굳이 넣을 필요 없음. article 객체에 id가 존재한다면 null을 반환
+        if(article.getId()!=null){  //id는 데이터 생성할 때 굳이 넣을 필요 없음. DB가 알아서 생성해주기 때문. article 객체에 id가 존재한다면 null을 반환
             return null;
         }
         return articleRepository.save(article);
@@ -44,7 +44,6 @@ public class ArticleService {
             //400. 잘못된 요청 응답!
             log.info("잘못된 요청! id: {}, article:{}",id,article.toString());
             return null;
-
         }
         //4. 업데이트 및 정상 응답(200)하기.
         target.patch(article);
