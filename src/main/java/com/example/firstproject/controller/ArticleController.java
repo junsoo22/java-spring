@@ -2,8 +2,10 @@ package com.example.firstproject.controller;
 
 import ch.qos.logback.core.joran.spi.DefaultNestedComponentRegistry;
 import com.example.firstproject.dto.ArticleForm;
+import com.example.firstproject.dto.CommentDto;
 import com.example.firstproject.entity.Article;
 import com.example.firstproject.repository.ArticleRepository;
+import com.example.firstproject.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -23,6 +26,8 @@ import java.util.Optional;
 public class ArticleController {
     @Autowired   //스프링부트가 미리 생성해 높은 객체를 가져다가 연결해줌. 의존성 주입
     private ArticleRepository articleRepository;        //객체 만들ㅇ지 않아도 됨.
+    @Autowired
+    private CommentService commentService;
 
 
     @GetMapping("/articles/new")
@@ -54,9 +59,11 @@ public class ArticleController {
         //1. id를 조회해 데이터 가져오기
         //findById: CrudRepository가 제공하는 메서드. 특정 엔티티의 id 값을 기준으로 데이터를 찾아 Optional 타입으로 반환
         Article articleEntity=articleRepository.findById(id).orElse(null);   //orElse: id값으로 데이터를 찾을때 해당 id 값이없으면 null을 반환하라는 뜻
+        List<CommentDto> commentDtos=commentService.comments(id);    //comments 메서드 호출해 조회한 댓글 목록을 LIst<CommentDto> 타입의 commentDtos에 저장
 
         //2. 모델에 데이터 등록하기
         model.addAttribute("article",articleEntity);    //article이라는 이름으로 articleEntity 객체 등록
+        model.addAttribute("commentDtos",commentDtos);    //댓글 목록 모델에 등록
         //3. 뷰 페이지 설정하기
         return "articles/show";   //뷰페이지는 articles라는 디렉터리 안에 show라는 파일이 있다고 가정하고 반환
     }
