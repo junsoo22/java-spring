@@ -38,27 +38,7 @@ public class ArticleApiController {
         Article created=articleService.create(dto);
         return (created!=null) ? ResponseEntity.status(HttpStatus.OK).body(created):ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
-//    //PATCH
-//    @PatchMapping("/api/articles/{id}")      //URL 요청 접수
-//    //ResponseEntity: REST API의 응답을 위해 사용하는 클래스.
-//    public ResponseEntity<Article> update(@PathVariable Long id, @RequestBody ArticleForm dto){     //요청 URL의 id와 요청 메시지의 본문 데이터를 받아옴
-//        //1. DTO -> 엔티티 변환
-//        Article article=dto.toEntity();    //dto를 엔티티로 변환
-//        log.info("id:{}, article:{}",id,article.toString());
-//        //2. 타깃 조회하기
-//        Article target=articleRepository.findById(id).orElse(null);
-//        //3. 잘못된 요청 처리하기
-//        if(target==null || id !=article.getId()){
-//            //400. 잘못된 요청 응답!
-//            log.info("잘못된 요청! id: {}, article:{}",id,article.toString());
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//
-//        }
-//        //4. 업데이트 및 정상 응답(200)하기.
-//        target.patch(article);
-//        Article updated=articleRepository.save(article);    //article 엔티티 DB에 저장
-//        return ResponseEntity.status(HttpStatus.OK).body(updated);
-//    }
+
 
     @PatchMapping("/api/articles/{id}")
     public ResponseEntity<Article> update(@PathVariable Long id, @RequestBody ArticleForm dto){
@@ -68,20 +48,6 @@ public class ArticleApiController {
         //수정되면 정상, 안되면 오류 응답
         return (updated!=null) ? ResponseEntity.status(HttpStatus.OK).body(updated):ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
-//    //DELETE
-//    @DeleteMapping("/api/articles/{id}")
-//    public ResponseEntity<Article> delete(@PathVariable Long id){
-//        //1. 대상 찾기
-//        Article target=articleRepository.findById(id).orElse(null);
-//        //2. 잘못된 요청 처리하기
-//        if(target==null){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
-//        //3. 대상 삭제하기
-//        articleRepository.delete(target);
-//        return ResponseEntity.status(HttpStatus.OK).body(null);
-//
-//    }
 
     @DeleteMapping("/api/articles/{id}")
     public ResponseEntity<Article> delete(@PathVariable Long id){

@@ -19,3 +19,6 @@ insert into comment(article_id,nickname,body) values(6,'Park','조깅');
 insert into comment(article_id,nickname,body) values(6,'Kim','유튜브 시청');
 insert into comment(article_id,nickname,body) values(6,'Lee','독서');
 
+insert into coffee(name,price) values('아메리카노','4500');
+insert into coffee(name,price) values('라떼','5000');
+insert into coffee(name,price) values('카페 모카','5500');
